@@ -94,9 +94,6 @@ body {
 }
 
 
-
-
-
 .star-container > button {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -128,6 +125,7 @@ body {
   margin-top: 30px;
   border: 1px solid #dcdcdc;
   height: 400px;
+  overflow-y: scroll; 
 }
 
 .user-review {
