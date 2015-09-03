@@ -9,9 +9,9 @@
 </head>
 <body ng-controller = "MainController">
 <form class="review-form"> 
-	<input type="text" placeholder = "Name" required ng-model = "userName"></input> <br>
+	<input type="text" placeholder = "Name" required ng-model = "userName" ng-minlength = "3" ></input> <br>
 	<input type="email" placeholder = "Email Address" required ng-model = "userEmail"></input> <br>
-	<textarea rows = "4" placeholder = "Add your review!" required ng-model = "userReview"></textarea>
+	<textarea rows = "4" placeholder = "Add your review!" required ng-model = "userReview" ng-minlength = "3"></textarea>
 	
 
 	<div class="star-container">
@@ -30,6 +30,8 @@
 
 <div class="review-comments">
 	<div class="user-review">
+
+
 		<div class="contact">
 			<img src="assets/img/ui-zac.jpg"> <br>
 			<span>Gigi Muschi</span>
