@@ -1,1 +1,1 @@
-var reviewApp = angular.module('myApp', []);
+var reviewApp = angular.module('reviewApp', []);
