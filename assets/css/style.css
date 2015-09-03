@@ -4,6 +4,11 @@ body {
 	margin: 0 auto;
 }
 
+
+
+
+
+
 .review-form > input, textarea {
 	margin-top: 10px;
 	padding: 10px;
@@ -13,8 +18,9 @@ body {
 
 
 .review-form > input:focus, textarea:focus  {
-	border: solid 1px #707070;
-  	box-shadow: 0 0 5px 1px #969696;
+	/*border: solid 1px #707070;*/
+  box-shadow: 0 0 5px 1px #969696;
+  outline: none;
 }
 
 
@@ -159,4 +165,25 @@ body {
   display: inline-block;
   vertical-align: top;
   width: 64%;
+}
+
+.ng-valid:focus {
+  border: 5px solid #66FF33;
+}
+
+.ng-invalid:focus {
+  border: 5px solid red;
+}
+
+
+form > .ng-valid {
+  border: 1px solid #66FF33;
+}
+
+form > .ng-invalid {
+  border: 1px solid red;
+}
+
+form > .ng-pristine {
+  border: 1px solid black;
 }
