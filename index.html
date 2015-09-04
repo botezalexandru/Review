@@ -8,12 +8,16 @@
 	<script type="text/javascript" src="js/vendor/angular.min.js"> </script>
 </head>
 <body ng-controller = "MainController">
-<form class="review-form"> 
-	<input type="text" placeholder = "Name" required ng-model = "userName" ng-minlength = "3" ></input> <br>
-	<input type="email" placeholder = "Email Address" required ng-model = "userEmail"></input> <br>
-	<textarea rows = "4" placeholder = "Add your review!" required ng-model = "userReview" ng-minlength = "3"></textarea>
+<form class="review-form" name="reviewForm"> 
+	<input type="text" placeholder = "Name" name="userName" required ng-model = "userName" ng-minlength = "3" ng-maxlength = "12" ng-pattern = "/^[a-z0-9_-]{3,16}$/"></input>
+	<span ng-show = "reviewForm.userName.$error.minlength"> user name must be at least three characters </span>
+	<span ng-show = "reviewForm.userName.$error.maxlength"> user name must be at most twelve characters </span>
+	 <br>
+	<input name = "reviewEmail" type="email" placeholder = "Email Address" required ng-model = "userEmail"></input> 
+	<span ng-show = "reviewForm.reviewEmail.$invalid && reviewForm.reviewEmail.$dirty">email format is invalid</span>
+	<br>
+	<textarea name="textArea" rows = "4" placeholder = "Add your review!" required ng-model = "userReview" ng-minlength = "3"></textarea>
 	
-
 	<div class="star-container">
 		<div class="star-rating">
 	  		<input type="radio" name="rating" value="1"><i></i>
@@ -22,38 +26,23 @@
 	  		<input type="radio" name="rating" value="4"><i></i>
 	  		<input type="radio" name="rating" value="5"><i></i>
 		</div>
-		<button type="submit">Add my review!</button>
+		<button type="submit" ng-disabled="reviewForm.$invalid">Add my review!</button>
 	</div>
+
+
 </form>
 
 
 
-<div class="review-comments">
-	<div class="user-review">
 
+<div class="review-comments" >
 
-		<div class="contact">
-			<img src="assets/img/ui-zac.jpg"> <br>
-			<span>Gigi Muschi</span>
-		</div>
-		<p class="review-text">
-			Ma ajuta sa imi rezolv ambele probleme in acelasi timp!
-		</p>
-	
-		<div class="star-container wtf">
-			<div class="star-rating">
-		  		<input type="radio" name="rating" value="1"><i></i>
-		  		<input type="radio" name="rating" value="2"><i></i>
-		  		<input type="radio" name="rating" value="3"><i></i>
-		  		<input type="radio" name="rating" value="4"><i></i>
-		  		<input type="radio" name="rating" value="5"><i></i>
-			</div>
-		</div>
+	<div class="user-review" ng-repeat = "app in apps">
+		<review-info info = "app"></review-info>
 	</div>
 
-	
-
 </div>
+
 
 	<!-- Modules -->
 	<script type="text/javascript" src="js/app.js"></script>
@@ -63,6 +52,7 @@
 
 
 	<!-- Dircetives -->
+	<script type="text/javascript" src = "js/directives/reviewInfo.js"></script>
 
 
 </body>
