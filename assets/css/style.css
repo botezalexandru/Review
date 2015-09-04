@@ -32,6 +32,11 @@ body {
 
 }
 
+.review-form > span {
+  color: red;
+  font-size: 14px;
+}
+
 
 
 .star-container {
@@ -125,6 +130,11 @@ body {
   text-decoration: none;
 }
 
+.star-container > button:disabled {
+  
+  opacity: 0.3;
+}
+
 
 .review-comments {
 
@@ -167,23 +177,23 @@ body {
   width: 64%;
 }
 
-.ng-valid:focus {
-  border: 5px solid #66FF33;
-}
-
-.ng-invalid:focus {
-  border: 5px solid red;
-}
-
-
-form > .ng-valid {
+.review-form > .ng-valid:focus {
   border: 1px solid #66FF33;
 }
 
-form > .ng-invalid {
+.review-form > .ng-invalid:focus {
   border: 1px solid red;
 }
 
-form > .ng-pristine {
+
+.review-form > .ng-valid {
+  border: 1px solid #66FF33;
+}
+
+.review-form > .ng-invalid {
+  border: 1px solid red;
+}
+
+.review-form > .ng-pristine {
   border: 1px solid black;
 }
