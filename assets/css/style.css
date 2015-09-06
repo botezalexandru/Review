@@ -83,8 +83,17 @@ body {
   position: relative;
 }
 
+
+.star_review input{
+  pointer-events: none;
+}
+.star-rating input[checked='false'] + i {
+  opacity: 0 !important;
+}
+
 .star-rating input:hover + i,
-.star-rating input:checked + i {
+.star-rating input:checked + i,
+.star-rating input[checked='true'] + i {
   opacity: 1;
 }
 
