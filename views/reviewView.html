@@ -1,19 +1,19 @@
-<div class="user-review">
 		<div class="contact">
 			<img src="assets/img/ui-zac.jpg"> <br>
-			<span>Gigi Muschi</span>
+			<span>{{info.userName}}</span>
 		</div>
 		<p class="review-text">
-			Ma ajuta sa imi rezolv ambele probleme in acelasi timp!
+			{{info.userReview}}
+			
+			
 		</p>
 	
-		<div class="star-container wtf">
-			<div class="star-rating">
-		  		<input type="radio" name="rating" value="1"><i></i>
-		  		<input type="radio" name="rating" value="2"><i></i>
-		  		<input type="radio" name="rating" value="3"><i></i>
-		  		<input type="radio" name="rating" value="4"><i></i>
-		  		<input type="radio" name="rating" value="5"><i></i>
+		<div class="star-container star_review">
+			<div class="star-rating" ng-checked="makeStar(info.rating)">
+		  		<input type="radio" name="rating{{index}}" value="1" checked="false"><i></i>
+		  		<input type="radio" name="rating{{index}}" value="2" checked="false"><i></i>
+		  		<input type="radio" name="rating{{index}}" value="3" checked="false"><i></i>
+		  		<input type="radio" name="rating{{index}}" value="4" checked="false"><i></i>
+		  		<input type="radio" name="rating{{index}}" value="5" checked="false"><i></i>
 			</div>
 		</div>
-	</div>
