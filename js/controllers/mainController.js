@@ -1,89 +1,25 @@
 
-reviewApp.controller('MainController', function($scope) {
+reviewApp.controller('MainController', function($scope, $http) {
 
-	body = angular.element(document.body)
+	
  	$scope.stars = [1,2,3,4,5];
- 	$scope.userReviews = [
- 	{
 
- 		userName: 'bap',
- 		userReview: 'Very nice indeed',
- 		rating: 3
 
- 	},
+ 	$http.get("Database/fetchData.php")
+	.success(function(response) {
+		$scope.userReviews = response.records;
+		$scope.userReviews.reverse();
+		
 
- 	{
- 		userName: 'illidan',
- 		userReview: 'Very ddddsacz indeed',
- 		rating: 4
- 	},
- 	{
+	});
 
- 		userName: 'bap',
- 		userReview: 'Very nice indeed',
- 		rating: 3
 
- 	},
-
- 	{
- 		userName: 'illidan',
- 		userReview: 'Very ddddsacz indeed',
- 		rating: 4
- 	},
-
- 	{
-
- 		userName: 'bap',
- 		userReview: 'Very nice indeed',
- 		rating: 3
-
- 	},
-
- 	{
- 		userName: 'illidan',
- 		userReview: 'Very ddddsacz indeed',
- 		rating: 4
- 	},
-
- 	{
-
- 		userName: 'bap',
- 		userReview: 'Very nice indeed',
- 		rating: 3
-
- 	},
-
- 	{
- 		userName: 'illidan',
- 		userReview: 'Very ddddsacz indeed',
- 		rating: 4
- 	},
-
- 	{
-
- 		userName: 'bap',
- 		userReview: 'Very nice indeed',
- 		rating: 3
-
- 	},
-
- 	{
- 		userName: 'illidan',
- 		userReview: 'Very ddddsacz indeed',
- 		rating: 4
- 	},
-
- 	];
 
  	 $scope.currentPage = 0;
  	 $scope.pageSize = 20;
  	 $scope.numberOfPages=function() {
-        return Math.ceil($scope.userReviews.length/$scope.pageSize);                
-    }
-
-
-
-
+        return Math.ceil($scope.userReviews.length/$scope.pageSize);    
+    };
 
 
  	$scope.makeStar = function(nr){
@@ -93,25 +29,38 @@ reviewApp.controller('MainController', function($scope) {
  		$scope.nrStars = nr;
  	}
  	$scope.addReview = function() {
- 		$scope.userReviews.push({
+ 		$scope.userReviews.unshift({
  			userName: $scope.inputUserName,
+ 			userEmail: $scope.inputUserEmail,
  			userReview: $scope.inputUserReview,
  			rating: $scope.nrStars
  		});
+
  		$scope.reviewForm.$setPristine(true);
  		$scope.inputUserName = '';
  		$scope.inputUserEmail = '';
  		$scope.inputUserReview = '';
+
+
+ 		
  	}
  	
- 	
+ 	$scope.insertdata = function() {
+ 		$http.post("Database/insert.php", {'inputUserName': $scope.inputUserName, 'inputUserEmail': $scope.inputUserEmail, 
+ 									'inputUserReview': $scope.inputUserReview, 'nrStars': $scope.nrStars})
+ 		.success(function(data, status, headers, config){
+ 			console.log("data inserted succesfully");
+
+ 			 		});
+
+ 	};
 });
 
 
 
 reviewApp.filter('startFrom', function() {
     return function(input, start) {
-        start = +start; //parse to int
+        start = +start; 
         return input.slice(start);
     }
 });
