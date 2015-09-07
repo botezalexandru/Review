@@ -11,7 +11,7 @@
 	
 </head>
 <body ng-controller = "MainController">
-<form class="review-form" name="reviewForm" ng-submit = "addReview()"> 
+<form class="review-form" name="reviewForm" ng-submit = "insertdata(); addReview(); "> 
 	<input type="text" placeholder = "Name" name="userName" required ng-model = "inputUserName" ng-minlength = "3" ng-maxlength = "12" ng-pattern = "/^[a-z0-9_-]{3,16}$/"></input>
 	<span ng-show = "reviewForm.userName.$error.minlength"> user name must be at least three characters </span>
 	<span ng-show = "reviewForm.userName.$error.maxlength"> user name must be at most twelve characters </span>
