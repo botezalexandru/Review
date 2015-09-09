@@ -1,26 +1,21 @@
 <?php 
-header("Access-Control-Allow-Origin: *");
+
 header("Content-Type: application/json; charset=UTF-8");
+include 'connect.php';
+
+$result = mysql_query("SELECT user_name, user_email, user_text_review, star_rating FROM reviews");
 
 
-$conn = new mysqli("localhost", "root", "", "review");
+$rows = array();
 
-$result = $conn->query("SELECT user_name, user_email, user_text_review, star_rating FROM reviews");
-
-$outp = "";
-
-while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-    if ($outp != "") {$outp .= ",";}
-    $outp .= '{"userName":"'  . $rs["user_name"] . '",';
-    $outp .= '"userEmail":"'  . md5(strtolower(trim($rs["user_email"]))) . '",';
-    $outp .= '"userReview":"'   . $rs["user_text_review"]        . '",';
-    $outp .= '"rating":"'. $rs["star_rating"]     . '"}'; 
+while ($row = mysql_fetch_array($result)) {
+	$review = array(
+		"userName" => $row['user_name'],
+		"userEmail" => md5(strtolower(trim($row['user_email']))),
+		"userReview" => $row['user_text_review'],
+		"rating" => $row['star_rating'],
+		);
+	array_push($rows, $review);
 }
 
-$outp ='{"records":['.$outp.']}';
-
-$conn->close();
-
-echo($outp);
-
-?>
+echo json_encode($rows);
