@@ -3,18 +3,54 @@ reviewApp.controller('MainController', function($scope, $http) {
 
 	
  	$scope.stars = [1,2,3,4,5];
+ 	$scope.limit = 3;
+ 	$scope.pageSize = 3;
+ 	$scope.beginWithRow = 0;
+ 	$scope.virtualCurrentPage = 0;
 
-
- 	$http.get("Database/fetchData2.php")
+ 	$http.get("Database/fetchData.php", {
+ 		params: { limit: $scope.pageSize,
+ 				  beginWithRow: $scope.beginWithRow }
+ 	})
 	.success(function(response) {
-		$scope.userReviews = response;
+		$scope.userReviews = response.review;
 		$scope.userReviews.reverse();
+		$scope.databaseSize = parseInt(response.rowCount);
 	});
+	$scope.nextReviews = function() {
+		$scope.virtualCurrentPage++;
+		$scope.beginWithRow += 3;
+		$http.get("Database/fetchData.php", {
+ 		params: { limit: $scope.pageSize,
+ 				  beginWithRow: $scope.beginWithRow }
+ 	})
+	.success(function(response) {
+		$scope.userReviews = response.review;
+		$scope.userReviews.reverse();
+		$scope.databaseSize = parseInt(response.rowCount);
+		debugger
+	});
+	};
+
+	$scope.prevReviews = function() {
+		$scope.virtualCurrentPage--;
+		$scope.beginWithRow -= 3;
+		$http.get("Database/fetchData.php", {
+ 		params: { limit: $scope.pageSize,
+ 				  beginWithRow: $scope.beginWithRow }
+ 	})
+	.success(function(response) {
+		$scope.userReviews = response.review;
+		$scope.userReviews.reverse();
+		$scope.databaseSize = parseInt(response.rowCount);
+		debugger
+	});
+	};
 
  	 $scope.currentPage = 0;
- 	 $scope.pageSize = 20;
+ 	 
  		$scope.numberOfPages=function() {
-        return Math.ceil($scope.userReviews.length/$scope.pageSize);    
+        return Math.ceil($scope.databaseSize/$scope.pageSize);    
     };
 
 
@@ -26,23 +62,23 @@ reviewApp.controller('MainController', function($scope, $http) {
  		$scope.nrStars = nr;
  	}
 
- 	$scope.addUserReview = function() {
- 		$http.get("Database/value.php")
-	.success(function(response1) {
-		if (response1 === '1') {
-			$scope.addReview();
-		} else if (response1 === '0') {
-			alert('Email already exists, please insert another email');
-			$scope.reviewForm.$setPristine(true);
-	 		$scope.inputUserName = '';
-	 		$scope.inputUserEmail = '';
-	 		$scope.inputUserReview = '';
-	 		$scope.nrStars='';
-		}
-
-		
-	});
- 	}
+ 	$scope.insertdata = function() {
+ 		$http.post("Database/insert.php", {'inputUserName': $scope.inputUserName, 'inputUserEmail': $scope.inputUserEmail, 
+ 									'inputUserReview': $scope.inputUserReview, 'nrStars': $scope.nrStars})
+ 		.success(function(data, status, headers, config){
+ 			console.log("data inserted succesfully");
+ 					if(data.message === "Email is valid") {
+ 						$scope.addReview();
+ 					} else  if (data.message === "Email already in database") {
+ 						alert('Email already exists, please insert another email');
+						$scope.reviewForm.$setPristine(true);
+				 		$scope.inputUserName = '';
+				 		$scope.inputUserEmail = '';
+				 		$scope.inputUserReview = '';
+				 		$scope.nrStars='';
+							}
+ 			 		});
+ 	}; 	
 
  	$scope.addReview = function() {
  		$scope.userReviews.unshift({
@@ -58,20 +94,8 @@ reviewApp.controller('MainController', function($scope, $http) {
  		$scope.inputUserReview = '';
  		$scope.nrStars='';
 
-
- 		
  	}
- 	
- 	$scope.insertdata = function() {
- 		$http.post("Database/insert.php", {'inputUserName': $scope.inputUserName, 'inputUserEmail': $scope.inputUserEmail, 
- 									'inputUserReview': $scope.inputUserReview, 'nrStars': $scope.nrStars})
- 		.success(function(data, status, headers, config){
- 			console.log("data inserted succesfully");
 
- 			 		});
-
- 		
- 	};
 });
 
 

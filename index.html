@@ -9,7 +9,7 @@
 	
 </head>
 <body ng-controller = "MainController">
-<form class="review-form" name="reviewForm" ng-submit = "insertdata(); addUserReview(); "> 
+<form class="review-form" name="reviewForm" ng-submit = "insertdata();"> 
 	<input type="text" placeholder = "Name" name="userName" required ng-model = "inputUserName" ng-minlength = "3" ng-maxlength = "12" ng-pattern = "/^[a-zA-Z0-9_-]{3,16}$/"></input>
 	<span ng-show = "reviewForm.userName.$error.minlength"> user name must be at least three characters </span>
 	<span ng-show = "reviewForm.userName.$error.maxlength"> user name must be at most twelve characters </span>
@@ -44,9 +44,9 @@
 
 </div>
 
-	<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-    {{currentPage+1}}/{{numberOfPages()}}
-    <button ng-disabled="currentPage >= userReviews.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next</button>
+	<button ng-disabled="virtualCurrentPage == 0" ng-click="prevReviews()">Previous</button>
+    {{virtualCurrentPage+1}}/{{numberOfPages()}}
+    <button ng-disabled="virtualCurrentPage >= databaseSize/pageSize - 1" ng-click="nextReviews()">Next</button>
     <input type="number" ng-model = "pageSize" min = "1"></input>
     
 
