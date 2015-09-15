@@ -13,7 +13,6 @@ reviewApp.directive('reviewInfo', function() {
        		angular.forEach(inputs, function(input, key){
        			if(key<nr)
        				input.setAttribute('checked',true)
-
        		});
 
        }
