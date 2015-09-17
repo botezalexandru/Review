@@ -1,20 +1,28 @@
-var reviewApp = angular.module('reviewApp', ['ngRoute']);
+var reviewApp = angular.module('reviewApp', ['ui.router']);
 
-reviewApp.config(function($routeProvider) { 
-  $routeProvider 
-    .when('/', { 
-      controller: 'MainController', 
-      templateUrl: 'views/home.html',  
+reviewApp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider 
+    .state('home', {
+      url: 			'/', 
+      controller: 	'MainController', 
+      templateUrl: 	'views/home.html',  
       
     }) 
 
-    .when('/details/:id', {
-      controller: "detailController",
-      templateUrl: "views/detail.html", 
+    .state('details', {
+      url:			'/details?id',
+      controller: 	'detailController',
+      templateUrl: 	'views/detail.html', 
       
     })
 
-    .otherwise({ 
-      redirectTo: '/' 
-    }); 
+    .state('details.changeUserName', {
+      url: '/changeUserName', 
+      templateUrl: 'views/changeUserName.html', 
+    })
+
+
+
+    $urlRouterProvider.otherwise('/'); 
+
 });
