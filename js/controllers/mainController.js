@@ -1,48 +1,37 @@
 
-reviewApp.controller('MainController',  function($scope, $http) {
+reviewApp.controller('MainController',  function($scope, $http, userReviewList) {
 
  	$scope.stars = [1,2,3,4,5];
  	$scope.pageSize = 5;
  	$scope.beginWithRow = 0;
  	$scope.virtualCurrentPage = 0;
 
- 	$http.get("Database/fetchData.php", {
- 		params: { limit: 		$scope.pageSize,
- 				  beginWithRow: $scope.beginWithRow }
- 	})
-	.success(function(response) {
-		$scope.userReviews = response.review;
-		$scope.userReviews.reverse();
-		$scope.databaseSize = parseInt(response.rowCount);
-	});
+
+ 	userReviewList.fetch($scope.pageSize, $scope.beginWithRow)
+ 		.success(function() {
+			$scope.userReviews = userReviewList.get();
+			$scope.databaseSize = userReviewList.getDbSize();
+ 		})
 
 	$scope.nextReviews = function() {
 		$scope.virtualCurrentPage++;
 		$scope.beginWithRow += $scope.pageSize;
-		$http.get("Database/fetchData.php", {
- 		params: { limit: 		$scope.pageSize,
- 				  beginWithRow: $scope.beginWithRow }
- 	})
-	.success(function(response) {
-		$scope.userReviews = response.review;
-		$scope.userReviews.reverse();
-		$scope.databaseSize = parseInt(response.rowCount);
-	});
+	 	userReviewList.fetch($scope.pageSize, $scope.beginWithRow)
+	 		.success(function() {
+				$scope.userReviews = userReviewList.get();
+				$scope.databaseSize = userReviewList.getDbSize();
+	 		})
 	};
 
 	$scope.prevReviews = function() {
 		$scope.virtualCurrentPage--;
 		$scope.beginWithRow -= $scope.pageSize;
-		$http.get("Database/fetchData.php", {
- 		params: { limit: 		$scope.pageSize,
- 				  beginWithRow: $scope.beginWithRow }
- 	})
-	.success(function(response) {
-		$scope.userReviews = response.review;
-		$scope.userReviews.reverse();
-		$scope.databaseSize = parseInt(response.rowCount);
-		debugger
-	});
+
+	 	userReviewList.fetch($scope.pageSize, $scope.beginWithRow)
+	 		.success(function() {
+				$scope.userReviews = userReviewList.get();
+				$scope.databaseSize = userReviewList.getDbSize();
+	 		})
 	};
 
  	 $scope.currentPage = 0;
