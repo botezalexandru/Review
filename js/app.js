@@ -1,4 +1,4 @@
-var reviewApp = angular.module('reviewApp', ['ui.router']);
+var reviewApp = angular.module('reviewApp', ['ui.router', 'ngResource']);
 
 reviewApp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider 

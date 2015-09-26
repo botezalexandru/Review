@@ -1,5 +1,5 @@
-reviewApp.controller('detailController', ['$scope', '$routeParams', function($scope, $routeParams) {
-	$scope.person = $scope.userReviews[$routeParams.id];
-	debugger
+reviewApp.controller('detailController', function($scope, $stateParams, userReviewList) {
 
-}])
+	$scope.person = userReviewList.get()[$stateParams.id];
+
+})
